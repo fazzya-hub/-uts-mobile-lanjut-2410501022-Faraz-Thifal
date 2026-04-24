@@ -9,4 +9,4 @@
 **Tech Stack:**
 * React Native + Expo 
 * React Navigation (Stack & Bottom Tabs) 
-* State Management: (Pilih salah satu: Context API / Redux / Zustand) 
+* State Management: Zustand
