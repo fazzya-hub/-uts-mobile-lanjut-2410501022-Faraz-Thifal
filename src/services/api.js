@@ -1,9 +1,9 @@
-export const fetchTrendingBooks = async () => {
+
+export const fetchBookDetail = async (bookKey) => {
   try {
-    const response = await fetch('https://openlibrary.org/trending/daily.json');
-    if (!response.ok) throw new Error('Gagal mengambil data');
-    const data = await response.json();
-    return data.works;
+    const response = await fetch(`https://openlibrary.org${bookKey}.json`);
+    if (!response.ok) throw new Error('Gagal memuat detail buku');
+    return await response.json();
   } catch (error) {
     throw error;
   }
