@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, ScrollView, ActivityIndicator, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { fetchBookDetail } from '../services/api';
-import useFavoriteStore from '../context/favoriteStore';
+import useFavoriteStore from '../context/favoriteStore.js';
 
 const DetailScreen = ({ route, navigation }) => {
   const { bookId } = route.params; 

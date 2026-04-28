@@ -1,41 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, ActivityIndicator, Text, RefreshControl, StyleSheet } from 'react-native';
-import { fetchTrendingBooks } from '../services/api';
+import { View, FlatList, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { getTrendingBooks } from '../services/api';
 import BookCard from '../components/BookCard';
 
 const HomeScreen = ({ navigation }) => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [refreshing, setRefreshing] = useState(false);
-
-  const loadData = async () => {
-    try {
-      setError(null);
-      const data = await fetchTrendingBooks();
-      setBooks(data);
-    } catch (err) {
-      setError('Gagal memuat data buku. Periksa koneksi internet Anda.');
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  };
 
   useEffect(() => {
+    const loadData = async () => {
+      try {
+        console.log("1. Memulai loadData di HomeScreen...");
+        const data = await getTrendingBooks();
+        
+        console.log("2. Data yang diterima:", data ? data.length : 0, "buku");
+        
+        if (data && data.length > 0) {
+          setBooks(data);
+        } else {
+          setError("Data kosong dari server.");
+        }
+      } catch (err) {
+        console.log("3. Error tertangkap di HomeScreen:", err.message);
+        setError("Gagal mengambil data. Cek koneksi internet.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
     loadData();
   }, []);
 
-  const onRefresh = () => {
-    setRefreshing(true);
-    loadData();
-  };
-
-  if (loading && !refreshing) {
+  if (loading) {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color="#0000ff" />
-        <Text>Memuat Buku...</Text>
+        <Text>Sedang mengambil data buku...</Text>
       </View>
     );
   }
@@ -43,8 +44,8 @@ const HomeScreen = ({ navigation }) => {
   if (error) {
     return (
       <View style={styles.center}>
-        <Text style={styles.errorText}>{error}</Text>
-        <Text onPress={loadData} style={styles.retryText}>Coba Lagi</Text>
+        <Text style={{ color: 'red', marginBottom: 10 }}>{error}</Text>
+        <Text style={{ fontSize: 12, color: '#888' }}>Coba restart Metro Bundler (tekan R)</Text>
       </View>
     );
   }
@@ -53,26 +54,21 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <FlatList
         data={books}
-        keyExtractor={(item) => item.key}
+        keyExtractor={(item, index) => item.key || index.toString()}
         renderItem={({ item }) => (
           <BookCard 
             item={item} 
             onPress={() => navigation.navigate('Detail', { bookId: item.key })} 
           />
         )}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: { flex: 1, backgroundColor: '#fff', padding: 10 },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 },
-  errorText: { color: 'red', textAlign: 'center', marginBottom: 10 },
-  retryText: { color: 'blue', fontWeight: 'bold' }
 });
 
 export default HomeScreen;
