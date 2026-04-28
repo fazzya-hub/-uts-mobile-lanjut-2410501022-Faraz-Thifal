@@ -19,7 +19,6 @@ function MainTabNavigator() {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          // PASTIKAN NAMA DI SINI SAMA DENGAN Tab.Screen name="..."
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Search') {
