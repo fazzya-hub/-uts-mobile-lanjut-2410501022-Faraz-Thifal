@@ -1,36 +1,37 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 
 const AboutScreen = () => {
   return (
     <View style={styles.container}>
+      <Image 
+        source={require('../../assets/profile.png')} 
+        style={styles.avatar} 
+      />
+
+      
+      <Text style={styles.name}>Faraz Thifal</Text>
+      <Text style={styles.subText}>NIM: 2410501022</Text>
+      <Text style={styles.subText}>Kelas: B</Text>
+
       <View style={styles.card}>
-        <Text style={styles.title}>Aplikasi</Text>
-        <Text style={styles.desc}>Disini saya mendapatkan tema bookshelf yang didalamnya terdapat fitur searc,favortie,loading,add,remove dan disini saya juga menggunakan open library yang sudah disiapkan</Text>
-        
-        <View style={styles.line} />
-        
-        <Text style={styles.label}>Nama:</Text>
-        <Text style={styles.value}>Faraz Thifal</Text>
-        
-        <Text style={styles.label}>NIM:</Text>
-        <Text style={styles.value}>2410501022</Text>
-        
-        <Text style={styles.label}>Program Studi:</Text>
-        <Text style={styles.value}>D3 Sistem Informasi</Text>
+        <Text style={styles.cardTitle}>UTS Pemrograman Mobile Lanjut</Text>
+        <Text style={styles.cardBody}>Tema: BookShelf (C)</Text>
+        <Text style={styles.cardBody}>API: Open Library</Text>
       </View>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f5f5f5', justifyContent: 'center', padding: 20 },
-  card: { backgroundColor: '#fff', padding: 25, borderRadius: 15, elevation: 3, alignItems: 'center' },
-  title: { fontSize: 22, fontWeight: 'bold', marginBottom: 10 },
-  desc: { textAlign: 'center', color: '#666', marginBottom: 20 },
-  line: { width: '100%', height: 1, backgroundColor: '#eee', marginBottom: 20 },
-  label: { fontSize: 14, color: '#888', marginTop: 10 },
-  value: { fontSize: 18, fontWeight: 'bold', color: '#333' }
+  container: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#f5f5f5' },
+  avatar: { width: 150, height: 200, borderRadius: 10, marginBottom: 20 },
+  name: { fontSize: 24, fontWeight: 'bold', color: '#333' },
+  subText: { fontSize: 16, color: '#666', marginBottom: 5 },
+  card: { marginTop: 30, padding: 20, backgroundColor: '#fff', borderRadius: 15, elevation: 3, width: '80%' },
+  cardTitle: { fontWeight: 'bold', marginBottom: 10, textAlign: 'center' },
+  cardBody: { fontSize: 14, color: '#444', textAlign: 'center' },
+  footer: { position: 'absolute', bottom: 20, color: '#aaa', fontSize: 12 }
 });
 
 export default AboutScreen;
